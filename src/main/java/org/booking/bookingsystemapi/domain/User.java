@@ -15,7 +15,6 @@ import java.util.List;
 @EqualsAndHashCode
 @Entity
 public class User {
-    @Setter
     @Id
     @GeneratedValue
     private Long id;
@@ -28,15 +27,15 @@ public class User {
 
     private String phone;
 
-    @ManyToMany
-    private List<Operation> bookedOperations;
+    @OneToMany
+    private List<Booking> bookings;
 
     public User(String firstName, String lastName, String email, String phone) {
         setFirstName(firstName);
         setLastName(lastName);
         setEmail(email);
         setPhone(phone);
-        this.bookedOperations = new ArrayList<>();
+        this.bookings = new ArrayList<>();
     }
 
     public User() {

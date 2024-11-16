@@ -3,13 +3,10 @@ package org.booking.bookingsystemapi.domain;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -29,15 +26,11 @@ public class Operation {
 
     private Double price;
 
-    @ManyToMany
-    private List<User> servicedUsers;
-
     public Operation(String operationName, OperationType operationType, String description, Double price) {
         setOperationName(operationName);
         setOperationType(operationType);
         setDescription(description);
         setPrice(price);
-        this.servicedUsers = new ArrayList<>();
     }
 
     public Operation() {
