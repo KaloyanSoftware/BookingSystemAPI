@@ -24,18 +24,21 @@ repositories {
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
-	implementation("org.springframework.boot:spring-boot-starter-jdbc")
+	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-web")
-	implementation("org.springframework.boot:spring-boot-starter-web-services")
-	implementation("org.springframework.session:spring-session-jdbc")
-	compileOnly("org.projectlombok:lombok")
+	implementation("org.springframework.boot:spring-boot-starter-actuator")
+	implementation("org.postgresql:postgresql:42.7.4")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
-	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	runtimeOnly("org.postgresql:postgresql")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+	implementation ("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("org.webjars.npm:bootstrap-icons:1.11.1")
+	implementation("org.webjars:bootstrap:5.3.2")
+	implementation("org.webjars:webjars-locator-core:0.48")
+	implementation ("org.springframework.boot:spring-boot-starter-thymeleaf")
+	implementation ("org.springframework.boot:spring-boot-starter-jdbc")
+	annotationProcessor("org.projectlombok:lombok")
 }
 
 tasks.withType<Test> {

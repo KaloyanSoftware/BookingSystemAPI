@@ -6,17 +6,19 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
 @ToString
 @EqualsAndHashCode
 @Entity
+@Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
+    @SequenceGenerator(name = "user_seq", sequenceName = "user_seq", allocationSize = 1)
     private Long id;
 
     private String firstName;
@@ -27,15 +29,14 @@ public class User {
 
     private String phone;
 
-    @OneToMany
-    private List<Booking> bookings;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Booking> bookings = new HashSet<>();
 
     public User(String firstName, String lastName, String email, String phone) {
         setFirstName(firstName);
         setLastName(lastName);
         setEmail(email);
         setPhone(phone);
-        this.bookings = new ArrayList<>();
     }
 
     public User() {

@@ -1,38 +1,42 @@
 package org.booking.bookingsystemapi.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
 import java.time.LocalDate;
-
 
 @Getter
 @Setter
 @ToString
 @EqualsAndHashCode
 @Entity
-public class Booking {
+@Table(name = "bookings")
+public class Booking{
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "booking_seq")
+    @SequenceGenerator(name = "booking_seq", sequenceName = "booking_seq", allocationSize = 1)
     private Long id;
-
-    @OneToOne
-    private Operation bookedOperation;
 
     private LocalDate bookedDate;
 
+    @Enumerated(EnumType.STRING)
     private BookingStatus bookingStatus;
 
-    public Booking(Operation bookedOperation, LocalDate bookedDate, BookingStatus bookingStatus) {
-        setBookedOperation(bookedOperation);
-        setBookedDate(bookedDate);
-        setBookingStatus(bookingStatus);
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "operation_id")
+    private Operation operation;
+
+    public Booking(LocalDate bookedDate, BookingStatus bookingStatus, User user, Operation operation) {
+        this.bookedDate = bookedDate;
+        this.bookingStatus = bookingStatus;
+        this.user = user;
+        this.operation = operation;
     }
 
     public Booking() {
