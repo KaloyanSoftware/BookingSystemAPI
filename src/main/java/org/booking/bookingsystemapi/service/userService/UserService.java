@@ -7,5 +7,9 @@ import org.springframework.stereotype.Service;
 public interface UserService {
     User fetchUserById(Long id);
 
-    User createUser(User user);
+    User saveUser(User user);
+
+    void updateUser(User currentUserBody, User updateRequestUserBody);
+
+    void deleteUserById(Long id);
 }

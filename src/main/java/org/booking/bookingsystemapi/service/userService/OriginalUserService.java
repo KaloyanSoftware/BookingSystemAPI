@@ -18,10 +18,32 @@ public class OriginalUserService implements UserService {
     }
 
     @Override
-    public User createUser(User user) {
+    public User saveUser(User user) {
         userRepository.save(user);
         return user;
     }
 
+    @Override
+    public void updateUser(User currentUserBody, User updateRequestUserBody) {
+        if(updateRequestUserBody.getFirstName() != null) {
+            currentUserBody.setFirstName(updateRequestUserBody.getFirstName());
+        }
+        if(updateRequestUserBody.getLastName() != null) {
+            currentUserBody.setLastName(updateRequestUserBody.getLastName());
+        }
+        if(updateRequestUserBody.getEmail() != null) {
+            currentUserBody.setEmail(updateRequestUserBody.getEmail());
+        }
+        if(updateRequestUserBody.getPhone() != null) {
+            currentUserBody.setPhone(updateRequestUserBody.getPhone());
+        }
+
+        saveUser(currentUserBody);
+    }
+
+    @Override
+    public void deleteUserById(Long id) {
+        userRepository.delete(fetchUserById(id));
+    }
 
 }
