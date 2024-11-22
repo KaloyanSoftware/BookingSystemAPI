@@ -4,6 +4,8 @@ import org.booking.bookingsystemapi.domain.User;
 import org.booking.bookingsystemapi.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 public class OriginalUserService implements UserService {
     private UserRepository userRepository;
@@ -25,25 +27,27 @@ public class OriginalUserService implements UserService {
 
     @Override
     public void updateUser(User currentUserBody, User updateRequestUserBody) {
-        if(updateRequestUserBody.getFirstName() != null) {
+        if (!Objects.equals(updateRequestUserBody.getFirstName(), currentUserBody.getFirstName())) {
             currentUserBody.setFirstName(updateRequestUserBody.getFirstName());
         }
-        if(updateRequestUserBody.getLastName() != null) {
+        if (!Objects.equals(updateRequestUserBody.getLastName(), currentUserBody.getLastName())) {
             currentUserBody.setLastName(updateRequestUserBody.getLastName());
         }
-        if(updateRequestUserBody.getEmail() != null) {
+        if (!Objects.equals(updateRequestUserBody.getEmail(), currentUserBody.getEmail())) {
             currentUserBody.setEmail(updateRequestUserBody.getEmail());
         }
-        if(updateRequestUserBody.getPhone() != null) {
+        if (!Objects.equals(updateRequestUserBody.getPhone(), currentUserBody.getPhone())) {
             currentUserBody.setPhone(updateRequestUserBody.getPhone());
         }
 
+        // Save the updated user
         saveUser(currentUserBody);
     }
 
+
     @Override
     public void deleteUserById(Long id) {
-        userRepository.delete(fetchUserById(id));
+        userRepository.deleteById(id);
     }
 
 }

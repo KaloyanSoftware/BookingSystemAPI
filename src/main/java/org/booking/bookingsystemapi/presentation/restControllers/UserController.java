@@ -31,7 +31,6 @@ public class UserController {
         }
     }
 
-    //TODO: Handle delete user requests
     @PutMapping("/bookingApi/users/{id}")
     public ResponseEntity<String> UpdateUser(@PathVariable("id") String id, @RequestBody User updateRequestUser) {
         log.info(String.format("Requested user body %s",updateRequestUser));
