@@ -41,19 +41,23 @@ public class OriginalOperationService implements OperationService {
     @Override
     public void updateOperation(Long operationId, Operation updateRequest) {
         Operation currentOperation = fetchOperationById(operationId);
-        if (!Objects.equals(updateRequest.getOperationName(), currentOperation.getOperationName())) {
+        if (!Objects.equals(updateRequest.getOperationName(), currentOperation.getOperationName())
+        && updateRequest.getOperationName() != null) {
             currentOperation.setOperationName(updateRequest.getOperationName());
         }
 
-        if (!Objects.equals(updateRequest.getDescription(), currentOperation.getDescription())) {
+        if (!Objects.equals(updateRequest.getDescription(), currentOperation.getDescription())
+        && updateRequest.getDescription() != null) {
             currentOperation.setDescription(updateRequest.getDescription());
         }
 
-        if (!Objects.equals(updateRequest.getPrice(), currentOperation.getPrice())) {
+        if (!Objects.equals(updateRequest.getPrice(), currentOperation.getPrice())
+        && updateRequest.getPrice() != null) {
             currentOperation.setPrice(updateRequest.getPrice());
         }
 
-        if (!Objects.equals(updateRequest.getOperationType(), currentOperation.getOperationType())) {
+        if (!Objects.equals(updateRequest.getOperationType(), currentOperation.getOperationType())
+        && updateRequest.getOperationType() != null) {
             currentOperation.setOperationType(updateRequest.getOperationType());
         }
 

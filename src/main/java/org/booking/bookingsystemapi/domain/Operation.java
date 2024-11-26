@@ -5,6 +5,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,9 +31,6 @@ public class Operation {
     private String description;
 
     private Double price;
-
-    @OneToMany(mappedBy = "operation", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Booking> bookings = new HashSet<>();
 
     public Operation(String operationName, OperationType operationType, String description, Double price) {
         setOperationName(operationName);

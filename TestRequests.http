@@ -1,7 +1,2 @@
-POST http://localhost:8080/bookingApi/providers
-Content-Type: application/json
+DELETE http://localhost:8080/bookingApi/providers/1/services/1
 
-{
-  "providerName" : "Head Hunters",
-  "providerEmail" : "headhunters@gmail.com"
-}

@@ -5,6 +5,11 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.boot.model.source.spi.ForeignKeyContributingSource;
+import org.hibernate.type.ForeignKeyDirection;
+
 import java.time.LocalDate;
 
 @Getter
@@ -24,19 +29,19 @@ public class Booking{
     @Enumerated(EnumType.STRING)
     private BookingStatus bookingStatus;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "operation_id")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "operation_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Operation operation;
 
-    public Booking(LocalDate bookedDate, BookingStatus bookingStatus, User user, Operation operation) {
+    public Booking(LocalDate bookedDate, BookingStatus bookingStatus) {
         this.bookedDate = bookedDate;
         this.bookingStatus = bookingStatus;
-        this.user = user;
-        this.operation = operation;
     }
 
     public Booking() {

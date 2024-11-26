@@ -25,7 +25,7 @@ public class OperationProvider {
 
     private String providerEmail;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="provider_id")
     private List<Operation> operations;
 

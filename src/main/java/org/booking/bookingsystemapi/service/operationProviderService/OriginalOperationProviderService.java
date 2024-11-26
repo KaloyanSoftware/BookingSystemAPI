@@ -27,10 +27,12 @@ public class OriginalOperationProviderService implements OperationProviderServic
 
     @Override
     public void updateProvider(OperationProvider currentProviderBody, OperationProvider updateRequestProviderBody) {
-        if (!Objects.equals(currentProviderBody.getProviderName(), updateRequestProviderBody.getProviderName())) {
+        if (!Objects.equals(currentProviderBody.getProviderName(), updateRequestProviderBody.getProviderName())
+        && updateRequestProviderBody.getProviderName() != null) {
             currentProviderBody.setProviderName(updateRequestProviderBody.getProviderName());
         }
-        if (!Objects.equals(currentProviderBody.getProviderEmail(), updateRequestProviderBody.getProviderEmail())) {
+        if (!Objects.equals(currentProviderBody.getProviderEmail(), updateRequestProviderBody.getProviderEmail())
+        && updateRequestProviderBody.getProviderEmail() != null) {
             currentProviderBody.setProviderEmail(updateRequestProviderBody.getProviderEmail());
         }
 

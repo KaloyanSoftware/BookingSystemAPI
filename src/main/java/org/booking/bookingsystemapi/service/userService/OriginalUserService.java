@@ -27,16 +27,20 @@ public class OriginalUserService implements UserService {
 
     @Override
     public void updateUser(User currentUserBody, User updateRequestUserBody) {
-        if (!Objects.equals(updateRequestUserBody.getFirstName(), currentUserBody.getFirstName())) {
+        if (!Objects.equals(updateRequestUserBody.getFirstName(), currentUserBody.getFirstName())
+        && updateRequestUserBody.getFirstName() != null) {
             currentUserBody.setFirstName(updateRequestUserBody.getFirstName());
         }
-        if (!Objects.equals(updateRequestUserBody.getLastName(), currentUserBody.getLastName())) {
+        if (!Objects.equals(updateRequestUserBody.getLastName(), currentUserBody.getLastName())
+        && updateRequestUserBody.getLastName() != null) {
             currentUserBody.setLastName(updateRequestUserBody.getLastName());
         }
-        if (!Objects.equals(updateRequestUserBody.getEmail(), currentUserBody.getEmail())) {
+        if (!Objects.equals(updateRequestUserBody.getEmail(), currentUserBody.getEmail())
+        && updateRequestUserBody.getEmail() != null) {
             currentUserBody.setEmail(updateRequestUserBody.getEmail());
         }
-        if (!Objects.equals(updateRequestUserBody.getPhone(), currentUserBody.getPhone())) {
+        if (!Objects.equals(updateRequestUserBody.getPhone(), currentUserBody.getPhone())
+        && updateRequestUserBody.getPhone() != null) {
             currentUserBody.setPhone(updateRequestUserBody.getPhone());
         }
 
