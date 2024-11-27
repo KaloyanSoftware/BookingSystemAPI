@@ -7,18 +7,15 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.boot.model.source.spi.ForeignKeyContributingSource;
-import org.hibernate.type.ForeignKeyDirection;
-
 import java.time.LocalDate;
 
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = "user")
 @Entity
 @Table(name = "bookings")
-public class Booking{
+public class Booking implements Comparable<Booking> {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "booking_seq")
     @SequenceGenerator(name = "booking_seq", sequenceName = "booking_seq", allocationSize = 1)
@@ -45,6 +42,10 @@ public class Booking{
     }
 
     public Booking() {
+    }
 
+    @Override
+    public int compareTo(Booking otherBooking) {
+        return this.bookedDate.compareTo(otherBooking.getBookedDate());
     }
 }

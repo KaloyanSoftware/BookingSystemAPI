@@ -7,7 +7,7 @@ import java.util.List;
 public interface OperationService {
     Operation fetchOperationById(Long id);
 
-    List<Operation> fetchAllOperations(Long providerId);
+    List<Operation> fetchAllProviderOperations(Long providerId);
 
     Operation saveOperation(Operation operation, Long OperationId);
 

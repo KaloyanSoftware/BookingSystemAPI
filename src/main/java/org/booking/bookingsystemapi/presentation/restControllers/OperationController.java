@@ -17,12 +17,12 @@ public class OperationController {
     }
 
     @GetMapping
-    public List<Operation> retrieveAllOperations(@PathVariable String providerId) {
-        return operationService.fetchAllOperations(Long.parseLong(providerId));
+    public List<Operation> retrieveAllProviderOperations(@PathVariable String providerId) {
+        return operationService.fetchAllProviderOperations(Long.parseLong(providerId));
     }
 
     @GetMapping("{id}")
-    public String retrieveOperation(@PathVariable("providerId") String id) {
+    public String retrieveOperation(@PathVariable("id") String id) {
         return operationService.fetchOperationById(Long.parseLong(id)).toString();
     }
 
@@ -47,7 +47,7 @@ public class OperationController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<String> deleteProvider(@PathVariable("providerId") String id) {
+    public ResponseEntity<String> deleteOperation(@PathVariable("id") String id) {
         try {
             operationService.deleteOperation(Long.parseLong(id));
             return new ResponseEntity<>("User data successfully received and processed.", HttpStatus.OK);

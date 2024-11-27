@@ -1,5 +1,6 @@
 package org.booking.bookingsystemapi.service.bookingService;
 
+import lombok.extern.java.Log;
 import org.booking.bookingsystemapi.domain.Booking;
 import org.booking.bookingsystemapi.domain.Operation;
 import org.booking.bookingsystemapi.domain.User;
@@ -7,10 +8,13 @@ import org.booking.bookingsystemapi.repository.BookingRepository;
 import org.booking.bookingsystemapi.service.operationService.OperationService;
 import org.booking.bookingsystemapi.service.userService.UserService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Log
 @Service
 public class OriginalBookingService implements BookingService {
     private BookingRepository bookingRepository;
@@ -26,9 +30,10 @@ public class OriginalBookingService implements BookingService {
     }
 
     @Override
-    public Set<Booking> fetchAllBookings(Long userId, Long operationId) {
-        return userService.fetchUserById(userId).getBookings().stream()
-                .filter(operation -> operation.getId().equals(operationId)).collect(Collectors.toSet());
+    public List<Booking> fetchAllUserOperationBookings(Long userId, Long operationId) {
+        User user = userService.fetchUserById(userId);
+        Operation operation = operationService.fetchOperationById(operationId);
+        return user.getBookings().stream().filter(booking -> booking.getOperation().equals(operation)).collect(Collectors.toList());
     }
 
     @Override
@@ -41,10 +46,10 @@ public class OriginalBookingService implements BookingService {
         User user = userService.fetchUserById(userId);
         Operation operation = operationService.fetchOperationById(operationId);
 
-        user.getBookings().add(booking);
-
-        booking.setUser(user);
         booking.setOperation(operation);
+
+        user.addBooking(booking);
+        booking.setUser(user);
 
         return bookingRepository.save(booking);
     }

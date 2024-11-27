@@ -5,16 +5,16 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = "bookings")
 @Entity
 @Table(name = "users")
 public class User {
@@ -24,24 +24,24 @@ public class User {
     private Long id;
 
     private String firstName;
-
     private String lastName;
-
     private String email;
-
     private String phone;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Booking> bookings = new HashSet<>();
+    private List<Booking> bookings = new ArrayList<>();
+
+    public void addBooking(Booking booking) {
+        this.bookings.add(booking);
+    }
 
     public User(String firstName, String lastName, String email, String phone) {
-        setFirstName(firstName);
-        setLastName(lastName);
-        setEmail(email);
-        setPhone(phone);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
     }
 
     public User() {
-
     }
 }

@@ -1,2 +1,14 @@
-DELETE http://localhost:8080/bookingApi/providers/1/services/1
+PUT http://localhost:8080/api/users/2/operations/3/bookings/19
+Content-Type: application/json
+
+{
+  "bookedDate": "2024-11-27",
+  "bookingStatus": "CONFIRMED"
+}
+
+
+
+
+
+
 

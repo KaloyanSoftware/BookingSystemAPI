@@ -27,7 +27,7 @@ public class OriginalOperationService implements OperationService {
     }
 
     @Override
-    public List<Operation> fetchAllOperations(Long providerId) {
+    public List<Operation> fetchAllProviderOperations(Long providerId) {
         return operationProviderService.fetchProviderById(providerId).getOperations();
     }
 

@@ -1,11 +1,13 @@
 package org.booking.bookingsystemapi.service.bookingService;
 
 import org.booking.bookingsystemapi.domain.Booking;
+
+import java.util.List;
 import java.util.Set;
 
 public interface BookingService {
 
-    Set<Booking> fetchAllBookings(Long userId, Long operationId);
+    List<Booking> fetchAllUserOperationBookings(Long userId, Long operationId);
 
     Booking fetchBookingById(Long bookingId);
 

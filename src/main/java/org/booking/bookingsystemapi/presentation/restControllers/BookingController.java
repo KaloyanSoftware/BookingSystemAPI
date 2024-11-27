@@ -18,10 +18,10 @@ public class BookingController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Booking>> getAllBookings(@PathVariable("userId") String userId,
-                                                        @PathVariable("operationId") String operationId) {
-        Set<Booking> bookings = bookingService.fetchAllBookings(Long.parseLong(userId), Long.parseLong(operationId));
-        return ResponseEntity.ok(bookings.stream().toList());
+    public ResponseEntity<List<Booking>> getAllUserOperationBookings(@PathVariable("userId") String userId,
+                                                                     @PathVariable("operationId") String operationId) {
+        List<Booking> bookings = bookingService.fetchAllUserOperationBookings(Long.parseLong(userId), Long.parseLong(operationId));
+        return ResponseEntity.ok(bookings);
     }
 
     @GetMapping("/{bookingId}")

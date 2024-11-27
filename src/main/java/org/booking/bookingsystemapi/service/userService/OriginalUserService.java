@@ -4,6 +4,7 @@ import org.booking.bookingsystemapi.domain.User;
 import org.booking.bookingsystemapi.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -12,6 +13,11 @@ public class OriginalUserService implements UserService {
 
     public OriginalUserService(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    @Override
+    public List<User> fetchAllUsers() {
+        return userRepository.findAll();
     }
 
     @Override

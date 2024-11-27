@@ -3,25 +3,38 @@ package org.booking.bookingsystemapi.presentation.restControllers;
 
 import lombok.extern.java.Log;
 import org.booking.bookingsystemapi.domain.User;
+import org.booking.bookingsystemapi.repository.UserRepository;
 import org.booking.bookingsystemapi.service.userService.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 @Log
 @RestController
+@RequestMapping("/bookingApi/users")
 public class UserController {
+    private final UserRepository userRepository;
     private UserService userService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserRepository userRepository) {
         this.userService = userService;
+        this.userRepository = userRepository;
     }
 
-    @GetMapping("/bookingApi/users/{id}")
+    @GetMapping
+    public ResponseEntity<List<User>> getUsers() {
+        List<User> allUsers = userService.fetchAllUsers();
+        return ResponseEntity.ok(allUsers);
+    }
+
+    @GetMapping("{id}")
     public String retrieveUser(@PathVariable("id") String id) {
         return userService.fetchUserById(Long.parseLong(id)).toString();
     }
 
-    @PostMapping("/bookingApi/users")
+    @PostMapping
     public ResponseEntity<String> saveUser(@RequestBody User user) {
         try {
             userService.saveUser(user);
@@ -31,7 +44,7 @@ public class UserController {
         }
     }
 
-    @PutMapping("/bookingApi/users/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<String> UpdateUser(@PathVariable("id") String id, @RequestBody User updateRequestUser) {
         log.info(String.format("Requested user body %s",updateRequestUser));
         try {
@@ -42,7 +55,7 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/bookingApi/users/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<String> deleteUser(@PathVariable("id") String id) {
         try {
             userService.deleteUserById(Long.parseLong(id));
