@@ -2,7 +2,6 @@ package org.booking.bookingsystemapi.presentation.restControllers;
 
 import org.booking.bookingsystemapi.domain.Operation;
 import org.booking.bookingsystemapi.service.operationService.OperationService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -22,38 +21,24 @@ public class OperationController {
     }
 
     @GetMapping("{id}")
-    public String retrieveOperation(@PathVariable("id") String id) {
-        return operationService.fetchOperationById(Long.parseLong(id)).toString();
+    public ResponseEntity<Operation> retrieveOperation(@PathVariable("id") String id) {
+        return ResponseEntity.ok(operationService.fetchOperationById(Long.parseLong(id)));
     }
 
     @PostMapping
-    public ResponseEntity<String> saveOperation(@PathVariable String providerId, @RequestBody Operation operation) {
-        try {
-            operationService.saveOperation(operation,Long.parseLong(providerId));
-            return new ResponseEntity<>("Provider data successfully received and processed.", HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Error processing provider data: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<Operation> saveOperation(@PathVariable String providerId, @RequestBody Operation operation) {
+        return ResponseEntity.ok(operationService.saveOperation(operation,Long.parseLong(providerId)));
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<String> updateProvider(@PathVariable("providerId") String id, @RequestBody Operation updateRequestOperation) {
-        try {
-            operationService.updateOperation(Long.parseLong(id), updateRequestOperation);
-            return new ResponseEntity<>("User data successfully received and processed.", HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Error processing user data: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<Operation> updateOperation(@PathVariable("id") String id, @RequestBody Operation updateRequestOperation) {
+            return ResponseEntity.ok(operationService.updateOperation(Long.parseLong(id), updateRequestOperation));
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<String> deleteOperation(@PathVariable("id") String id) {
-        try {
-            operationService.deleteOperation(Long.parseLong(id));
-            return new ResponseEntity<>("User data successfully received and processed.", HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Error processing user data: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<Void> deleteOperation(@PathVariable("id") String id) {
+        operationService.deleteOperation(Long.parseLong(id));
+        return ResponseEntity.noContent().build();
     }
 
 

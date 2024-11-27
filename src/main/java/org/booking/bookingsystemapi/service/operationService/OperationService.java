@@ -11,7 +11,7 @@ public interface OperationService {
 
     Operation saveOperation(Operation operation, Long OperationId);
 
-    void updateOperation(Long operationId, Operation updatedOperationBody);
+    Operation updateOperation(Long operationId, Operation updatedOperationBody);
 
     void deleteOperation(Long operationId);
 }

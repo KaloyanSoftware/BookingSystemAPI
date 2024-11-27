@@ -4,9 +4,7 @@ import org.booking.bookingsystemapi.domain.Booking;
 import org.booking.bookingsystemapi.service.bookingService.BookingService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/users/{userId}/operations/{operationId}/bookings")

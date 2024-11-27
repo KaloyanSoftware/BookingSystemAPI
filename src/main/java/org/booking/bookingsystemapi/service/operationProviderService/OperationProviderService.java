@@ -11,7 +11,7 @@ public interface OperationProviderService {
 
     OperationProvider saveProvider(OperationProvider operationProvider);
 
-    void updateProvider(OperationProvider currentProviderBody, OperationProvider updateRequestProviderBody);
+    OperationProvider updateProvider(OperationProvider currentProviderBody, OperationProvider updateRequestProviderBody);
 
     void deleteProviderById(Long id);
 }

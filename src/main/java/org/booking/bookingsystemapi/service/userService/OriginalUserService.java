@@ -32,7 +32,7 @@ public class OriginalUserService implements UserService {
     }
 
     @Override
-    public void updateUser(User currentUserBody, User updateRequestUserBody) {
+    public User updateUser(User currentUserBody, User updateRequestUserBody) {
         if (!Objects.equals(updateRequestUserBody.getFirstName(), currentUserBody.getFirstName())
         && updateRequestUserBody.getFirstName() != null) {
             currentUserBody.setFirstName(updateRequestUserBody.getFirstName());
@@ -51,7 +51,7 @@ public class OriginalUserService implements UserService {
         }
 
         // Save the updated user
-        saveUser(currentUserBody);
+        return saveUser(currentUserBody);
     }
 
 

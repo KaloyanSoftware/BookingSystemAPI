@@ -39,7 +39,7 @@ public class OriginalOperationService implements OperationService {
     }
 
     @Override
-    public void updateOperation(Long operationId, Operation updateRequest) {
+    public Operation updateOperation(Long operationId, Operation updateRequest) {
         Operation currentOperation = fetchOperationById(operationId);
         if (!Objects.equals(updateRequest.getOperationName(), currentOperation.getOperationName())
         && updateRequest.getOperationName() != null) {
@@ -61,7 +61,7 @@ public class OriginalOperationService implements OperationService {
             currentOperation.setOperationType(updateRequest.getOperationType());
         }
 
-        operationRepository.save(currentOperation);
+        return operationRepository.save(currentOperation);
     }
 
     @Override
