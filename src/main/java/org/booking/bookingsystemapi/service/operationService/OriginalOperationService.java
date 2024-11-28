@@ -3,6 +3,7 @@ package org.booking.bookingsystemapi.service.operationService;
 import org.booking.bookingsystemapi.domain.Operation;
 import org.booking.bookingsystemapi.domain.OperationProvider;
 import org.booking.bookingsystemapi.repository.OperationRepository;
+import org.booking.bookingsystemapi.service.logDataService.LogDataService;
 import org.booking.bookingsystemapi.service.operationProviderService.OperationProviderService;
 import org.springframework.stereotype.Service;
 
@@ -16,18 +17,23 @@ public class OriginalOperationService implements OperationService {
 
     private OperationProviderService operationProviderService;
 
-    public OriginalOperationService(OperationRepository operationRepository, OperationProviderService operationProviderService) {
+    private LogDataService logDataService;
+
+    public OriginalOperationService(OperationRepository operationRepository, OperationProviderService operationProviderService, LogDataService logDataService) {
         this.operationRepository = operationRepository;
         this.operationProviderService = operationProviderService;
+        this.logDataService = logDataService;
     }
 
     @Override
     public Operation fetchOperationById(Long id) {
+        logDataService.saveLogData("Operation","GET");
         return operationRepository.findById(id).orElse(null);
     }
 
     @Override
     public List<Operation> fetchAllProviderOperations(Long providerId) {
+        logDataService.saveLogData("Operation","GET");
         return operationProviderService.fetchProviderById(providerId).getOperations();
     }
 
@@ -35,6 +41,7 @@ public class OriginalOperationService implements OperationService {
     public Operation saveOperation(Operation operation, Long providerId) {
         OperationProvider provider = operationProviderService.fetchProviderById(providerId);
         provider.getOperations().add(operation);
+        logDataService.saveLogData("Operation","POST");
         return operationRepository.save(operation);
     }
 
@@ -61,11 +68,13 @@ public class OriginalOperationService implements OperationService {
             currentOperation.setOperationType(updateRequest.getOperationType());
         }
 
+        logDataService.saveLogData("Operation","PUT");
         return operationRepository.save(currentOperation);
     }
 
     @Override
     public void deleteOperation(Long operationId) {
         operationRepository.deleteById(operationId);
+        logDataService.saveLogData("Operation","DELETE");
     }
 }

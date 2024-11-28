@@ -1,9 +1,7 @@
 package org.booking.bookingsystemapi.service.bookingService;
 
 import org.booking.bookingsystemapi.domain.Booking;
-
 import java.util.List;
-import java.util.Set;
 
 public interface BookingService {
 

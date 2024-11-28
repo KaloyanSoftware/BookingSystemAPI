@@ -5,13 +5,13 @@ import org.booking.bookingsystemapi.domain.Booking;
 import org.booking.bookingsystemapi.domain.Operation;
 import org.booking.bookingsystemapi.domain.User;
 import org.booking.bookingsystemapi.repository.BookingRepository;
+import org.booking.bookingsystemapi.service.logDataService.LogDataService;
 import org.booking.bookingsystemapi.service.operationService.OperationService;
 import org.booking.bookingsystemapi.service.userService.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Log
@@ -23,21 +23,26 @@ public class OriginalBookingService implements BookingService {
 
     private OperationService operationService;
 
-    public OriginalBookingService(BookingRepository bookingRepository,UserService userService, OperationService operationService) {
+    private LogDataService logDataService;
+
+    public OriginalBookingService(BookingRepository bookingRepository,UserService userService, OperationService operationService, LogDataService logDataService) {
         this.bookingRepository = bookingRepository;
         this.userService = userService;
         this.operationService = operationService;
+        this.logDataService = logDataService;
     }
 
     @Override
     public List<Booking> fetchAllUserOperationBookings(Long userId, Long operationId) {
         User user = userService.fetchUserById(userId);
         Operation operation = operationService.fetchOperationById(operationId);
+        logDataService.saveLogData("Booking","GET");
         return user.getBookings().stream().filter(booking -> booking.getOperation().equals(operation)).collect(Collectors.toList());
     }
 
     @Override
     public Booking fetchBookingById(Long bookingId) {
+        logDataService.saveLogData("Booking","GET");
         return bookingRepository.findById(bookingId).orElse(null);
     }
 
@@ -50,6 +55,7 @@ public class OriginalBookingService implements BookingService {
 
         user.addBooking(booking);
         booking.setUser(user);
+        logDataService.saveLogData("Booking","POST");
 
         return bookingRepository.save(booking);
     }
@@ -67,11 +73,13 @@ public class OriginalBookingService implements BookingService {
 
         // Save the updated entity
         bookingRepository.save(currentBookingBody);
+        logDataService.saveLogData("Booking","PUT");
         return currentBookingBody;
     }
 
     @Override
     public void deleteBookingById(Long bookingId) {
+        logDataService.saveLogData("Booking","DELETE");
         bookingRepository.deleteById(bookingId);
     }
 }

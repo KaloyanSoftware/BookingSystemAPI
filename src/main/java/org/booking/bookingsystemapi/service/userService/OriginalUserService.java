@@ -2,6 +2,7 @@ package org.booking.bookingsystemapi.service.userService;
 
 import org.booking.bookingsystemapi.domain.User;
 import org.booking.bookingsystemapi.repository.UserRepository;
+import org.booking.bookingsystemapi.service.logDataService.LogDataService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,23 +12,29 @@ import java.util.Objects;
 public class OriginalUserService implements UserService {
     private UserRepository userRepository;
 
-    public OriginalUserService(UserRepository userRepository) {
+    private LogDataService logDataService;
+
+    public OriginalUserService(UserRepository userRepository, LogDataService logDataService) {
         this.userRepository = userRepository;
+        this.logDataService = logDataService;
     }
 
     @Override
     public List<User> fetchAllUsers() {
+        logDataService.saveLogData("User","GET");
         return userRepository.findAll();
     }
 
     @Override
     public User fetchUserById(Long id) {
+        logDataService.saveLogData("User","GET");
         return userRepository.findById(id).orElse(null);
     }
 
     @Override
     public User saveUser(User user) {
         userRepository.save(user);
+        logDataService.saveLogData("User","POST");
         return user;
     }
 
@@ -51,12 +58,14 @@ public class OriginalUserService implements UserService {
         }
 
         // Save the updated user
+        logDataService.saveLogData("User","PUT");
         return saveUser(currentUserBody);
     }
 
 
     @Override
     public void deleteUserById(Long id) {
+        logDataService.saveLogData("User","DELETE");
         userRepository.deleteById(id);
     }
 
