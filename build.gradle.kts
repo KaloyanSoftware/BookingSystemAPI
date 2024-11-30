@@ -24,12 +24,14 @@ repositories {
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.postgresql:postgresql:42.7.4")
 	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+	implementation("org.springframework.boot:spring-boot-starter-security")
+	implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
+	testImplementation("org.springframework.security:spring-security-test")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
@@ -38,7 +40,6 @@ dependencies {
 	implementation("org.webjars:bootstrap:5.3.2")
 	implementation("org.webjars:webjars-locator-core:0.48")
 	implementation ("org.springframework.boot:spring-boot-starter-thymeleaf")
-	implementation ("org.springframework.boot:spring-boot-starter-jdbc")
 	annotationProcessor("org.projectlombok:lombok")
 }
 

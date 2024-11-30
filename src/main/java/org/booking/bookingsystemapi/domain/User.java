@@ -5,11 +5,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -25,6 +22,8 @@ public class User {
 
     private String firstName;
     private String lastName;
+    private String username;
+    private String password;
     private String email;
     private String phone;
 
@@ -35,9 +34,11 @@ public class User {
         this.bookings.add(booking);
     }
 
-    public User(String firstName, String lastName, String email, String phone) {
+    public User(String firstName, String lastName, String username, String password, String email, String phone) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.username = username;
+        this.password = password;
         this.email = email;
         this.phone = phone;
     }

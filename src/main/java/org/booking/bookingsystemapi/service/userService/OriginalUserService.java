@@ -1,15 +1,19 @@
 package org.booking.bookingsystemapi.service.userService;
 
 import org.booking.bookingsystemapi.domain.User;
+import org.booking.bookingsystemapi.domain.UserPrincipal;
 import org.booking.bookingsystemapi.repository.UserRepository;
 import org.booking.bookingsystemapi.service.logDataService.LogDataService;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
 
 @Service
-public class OriginalUserService implements UserService {
+public class OriginalUserService implements UserService, UserDetailsService {
     private UserRepository userRepository;
 
     private LogDataService logDataService;
@@ -29,6 +33,19 @@ public class OriginalUserService implements UserService {
     public User fetchUserById(Long id) {
         logDataService.saveLogData("User","GET");
         return userRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User foundUser = userRepository.findByUsername(username);
+
+        if(foundUser == null) {
+            System.out.println("User not found");
+            throw new UsernameNotFoundException("User not found");
+        }
+
+        return new UserPrincipal(foundUser);
+
     }
 
     @Override
@@ -56,6 +73,14 @@ public class OriginalUserService implements UserService {
         && updateRequestUserBody.getPhone() != null) {
             currentUserBody.setPhone(updateRequestUserBody.getPhone());
         }
+        if (!Objects.equals(updateRequestUserBody.getPassword(), currentUserBody.getPassword())
+                && updateRequestUserBody.getPassword() != null) {
+            currentUserBody.setPassword(updateRequestUserBody.getPassword());
+        }
+        if (!Objects.equals(updateRequestUserBody.getUsername(), currentUserBody.getUsername())
+                && updateRequestUserBody.getUsername() != null) {
+            currentUserBody.setUsername(updateRequestUserBody.getUsername());
+        }
 
         // Save the updated user
         logDataService.saveLogData("User","PUT");
@@ -68,5 +93,4 @@ public class OriginalUserService implements UserService {
         logDataService.saveLogData("User","DELETE");
         userRepository.deleteById(id);
     }
-
 }
