@@ -4,19 +4,23 @@ import org.booking.bookingsystemapi.domain.User;
 import org.booking.bookingsystemapi.domain.UserPrincipal;
 import org.booking.bookingsystemapi.repository.UserRepository;
 import org.booking.bookingsystemapi.service.logDataService.LogDataService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Objects;
 
 @Service
-public class OriginalUserService implements UserService, UserDetailsService {
+@Qualifier("originalUserService")
+public class OriginalUserService implements UserService{
     private UserRepository userRepository;
 
     private LogDataService logDataService;
+
+    private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(12);
 
     public OriginalUserService(UserRepository userRepository, LogDataService logDataService) {
         this.userRepository = userRepository;
@@ -50,6 +54,7 @@ public class OriginalUserService implements UserService, UserDetailsService {
 
     @Override
     public User saveUser(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         logDataService.saveLogData("User","POST");
         return user;
