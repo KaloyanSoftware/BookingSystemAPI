@@ -16,10 +16,9 @@ public class BookingController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Booking>> getAllUserOperationBookings(@PathVariable("userId") String userId,
+    public List<Booking> getAllUserOperationBookings(@PathVariable("userId") String userId,
                                                                      @PathVariable("operationId") String operationId) {
-        List<Booking> bookings = bookingService.fetchAllUserOperationBookings(Long.parseLong(userId), Long.parseLong(operationId));
-        return ResponseEntity.ok(bookings);
+        return bookingService.fetchAllUserOperationBookings(Long.parseLong(userId), Long.parseLong(operationId));
     }
 
     @GetMapping("/{bookingId}")

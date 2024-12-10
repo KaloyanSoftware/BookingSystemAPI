@@ -18,8 +18,8 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getUsers() {
-        return ResponseEntity.ok(userService.fetchAllUsers());
+    public List<User> getUsers() {
+        return userService.fetchAllUsers();
     }
 
     @GetMapping("{id}")

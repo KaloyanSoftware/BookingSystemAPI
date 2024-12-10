@@ -1,14 +1,4 @@
-POST http://localhost:8080/bookingApi/users
-Content-Type: application/json
-
-{
-  "firstName": "Ivan",
-  "lastName": "Pehlivanov",
-  "email": "ivan@gmail.com",
-  "password": "Smoking123",
-  "phone": "089351255969",
-  "username": "IvanSu"
-}
+GET http://localhost:8080/api/users/2/operations/3/bookings
 
 
 

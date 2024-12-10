@@ -7,7 +7,6 @@ import org.booking.bookingsystemapi.service.logDataService.LogDataService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -20,7 +19,8 @@ public class OriginalUserService implements UserService{
 
     private LogDataService logDataService;
 
-    private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(12);
+
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
     public OriginalUserService(UserRepository userRepository, LogDataService logDataService) {
         this.userRepository = userRepository;
@@ -54,7 +54,7 @@ public class OriginalUserService implements UserService{
 
     @Override
     public User saveUser(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
         logDataService.saveLogData("User","POST");
         return user;
@@ -80,7 +80,7 @@ public class OriginalUserService implements UserService{
         }
         if (!Objects.equals(updateRequestUserBody.getPassword(), currentUserBody.getPassword())
                 && updateRequestUserBody.getPassword() != null) {
-            currentUserBody.setPassword(updateRequestUserBody.getPassword());
+            currentUserBody.setPassword(encoder.encode(updateRequestUserBody.getPassword()));
         }
         if (!Objects.equals(updateRequestUserBody.getUsername(), currentUserBody.getUsername())
                 && updateRequestUserBody.getUsername() != null) {
