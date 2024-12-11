@@ -41,7 +41,9 @@ dependencies {
 	implementation("org.webjars:webjars-locator-core:0.48")
 	implementation ("org.springframework.boot:spring-boot-starter-thymeleaf")
 	annotationProcessor("org.projectlombok:lombok")
-
+	implementation("io.jsonwebtoken:jjwt-api:0.12.5")
+	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.5")
+	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.5")
 }
 
 tasks.withType<Test> {

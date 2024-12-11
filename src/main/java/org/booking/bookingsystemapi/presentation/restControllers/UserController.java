@@ -2,6 +2,7 @@ package org.booking.bookingsystemapi.presentation.restControllers;
 
 import lombok.extern.java.Log;
 import org.booking.bookingsystemapi.domain.User;
+import org.booking.bookingsystemapi.service.userService.UserAuthenticationService;
 import org.booking.bookingsystemapi.service.userService.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +12,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/bookingApi/users")
 public class UserController {
-    private UserService userService;
+    private final UserService userService;
 
-    public UserController(UserService userService) {
+    private UserAuthenticationService userAuthenticationService;
+
+    public UserController(UserService userService, UserAuthenticationService userAuthenticationService) {
         this.userService = userService;
+        this.userAuthenticationService = userAuthenticationService;
     }
 
     @GetMapping
@@ -30,6 +34,12 @@ public class UserController {
     @PostMapping
     public User saveUser(@RequestBody User user) {
         return userService.saveUser(user);
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestBody User user) {
+        log.info("Requested login: " + user.getUsername());
+        return userAuthenticationService.verify(user);
     }
 
     @PutMapping("{id}")
