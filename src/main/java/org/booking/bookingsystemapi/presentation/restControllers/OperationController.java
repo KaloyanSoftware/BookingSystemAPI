@@ -40,7 +40,4 @@ public class OperationController {
         operationService.deleteOperation(Long.parseLong(id));
         return ResponseEntity.noContent().build();
     }
-
-
-
 }
