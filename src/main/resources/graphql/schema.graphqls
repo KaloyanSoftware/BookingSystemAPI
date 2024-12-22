@@ -1,0 +1,24 @@
+type Query{
+    bookingById(id: Int): Booking
+    bookings(userId: Int): [Booking]
+    operationById(id: Int): Operation
+}
+
+type Booking{
+    id: Int
+    bookedDate: String
+    bookingStatus: String
+    operation: Operation
+}
+
+type Operation{
+    id:Int
+
+    operationName: String
+
+    operationType: String
+
+    description: String
+
+    price: Int
+}
