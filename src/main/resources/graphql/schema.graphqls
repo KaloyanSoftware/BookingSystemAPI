@@ -1,7 +1,6 @@
 type Query{
     bookingById(id: Int): Booking
     bookings(userId: Int): [Booking]
-    operationById(id: Int): Operation
 }
 
 type Booking{

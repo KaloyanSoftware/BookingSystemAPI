@@ -7,6 +7,8 @@ public interface BookingService {
 
     List<Booking> fetchAllUserOperationBookings(Long userId, Long operationId);
 
+    List<Booking> fetchAllUserBookings(Long userId);
+
     Booking fetchBookingById(Long bookingId);
 
     Booking saveBooking(Long UserId, Long OperationId, Booking booking);

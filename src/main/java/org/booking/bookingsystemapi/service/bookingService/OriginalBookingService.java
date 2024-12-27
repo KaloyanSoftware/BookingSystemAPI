@@ -41,6 +41,11 @@ public class OriginalBookingService implements BookingService {
     }
 
     @Override
+    public List<Booking> fetchAllUserBookings(Long userId) {
+        return bookingRepository.getBookingByUserId(userId);
+    }
+
+    @Override
     public Booking fetchBookingById(Long bookingId) {
         logDataService.saveLogData("Booking","GET");
         return bookingRepository.findById(bookingId).orElse(null);
