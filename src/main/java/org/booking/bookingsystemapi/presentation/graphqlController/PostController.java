@@ -1,9 +1,12 @@
 package org.booking.bookingsystemapi.presentation.graphqlController;
 
 import org.booking.bookingsystemapi.domain.Booking;
+import org.booking.bookingsystemapi.domain.Operation;
 import org.booking.bookingsystemapi.service.bookingService.BookingService;
+import org.booking.bookingsystemapi.service.operationService.OperationService;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
@@ -12,9 +15,11 @@ import java.util.List;
 public class PostController {
 
     private final BookingService bookingService;
+    private final OperationService operationService;
 
-    public PostController(BookingService bookingService) {
+    public PostController(BookingService bookingService, OperationService operationService) {
         this.bookingService = bookingService;
+        this.operationService = operationService;
     }
 
     @QueryMapping
@@ -23,7 +28,12 @@ public class PostController {
     }
 
     @QueryMapping
-    public List<Booking> bookings(@Argument Integer id) {
-        return bookingService.fetchAllUserBookings(Long.parseLong(id.toString()));
+    public List<Booking> bookings(@Argument Integer userId) {
+        return bookingService.fetchAllUserBookings(Long.parseLong(userId.toString()));
+    }
+
+    @SchemaMapping
+    public Operation operationById(@Argument Integer operationId) {
+        return operationService.fetchOperationById(Long.parseLong(operationId.toString()));
     }
 }

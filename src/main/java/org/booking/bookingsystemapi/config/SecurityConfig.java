@@ -37,11 +37,7 @@ public class SecurityConfig {
 
                 .csrf(AbstractHttpConfigurer::disable).
                 authorizeHttpRequests(request -> request
-                        .requestMatchers("bookingApi/users/login").permitAll()
-                        .requestMatchers("/bookingApi/providers/{providerId}/services",
-                                "/bookingApi/providers/{providerId}/services/{id}",
-                                "/bookingApi/providers",
-                                "/bookingApi/providers/{id}").denyAll()
+                        .requestMatchers("bookingApi/users").permitAll()
                         .anyRequest().authenticated()).
                 httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

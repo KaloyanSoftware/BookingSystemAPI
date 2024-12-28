@@ -1,6 +1,7 @@
 type Query{
     bookingById(id: Int): Booking
     bookings(userId: Int): [Booking]
+    operationById(operationId: Int): Operation
 }
 
 type Booking{
